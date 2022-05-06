@@ -17,10 +17,10 @@ router.post('/add-product',Admin, async(req,res)=>{
     }
 }); 
 
-router.post('/delete-product',Admin, async(req,res)=>{
+router.delete('/delete-product',Admin, async(req,res)=>{
     try {
        // console.log(req.query.uuid)
-        await productSchema.findOneAndDelete({uuid: req.body.uuid}).exec();
+        await productSchema.findOneAndDelete({uuid: req.query.uuid}).exec();
         return res.status(200).json({'status': 'success', message: " details of product is deleted successfully"});
     } catch (error) {
         console.log(error.message);

@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const cartSchema= require('../models/cart.model')
-const { authverify } = require('../middleware/auth')
+const { authverify } = require('../middleware/auth');
+const { status } = require('express/lib/response');
 
 router.post('/cart-add-product', authverify, async(req,res)=>{
     try {
@@ -17,7 +18,7 @@ router.post('/cart-add-product', authverify, async(req,res)=>{
     }
 })               
 
-router.post("/cart-add", async (req, res) => {
+router.post("/cart", async (req, res) => {
     const useruuid = req.query.useruuid 
     const { productuuid, productName, quantity , price } = req.body;
     try {
@@ -38,7 +39,7 @@ router.post("/cart-add", async (req, res) => {
         } else {
           cart.cartItems.push({ productuuid, productName,  quantity, price });
         }
-        cart = await cart.save();cc
+        cart = await cart.save();
         return res.status(201).json({"status":"success", "message":"products added to cart","result":cart});
       } else {
         const newCart = await cartSchema.create({
@@ -53,17 +54,30 @@ router.post("/cart-add", async (req, res) => {
     }
   });
 
-
-  router.post('/delete-cart',async(req,res)=>{
+// delete cart
+  router.delete('/delete-cart',async(req,res)=>{
     try {
        // console.log(req.query.uuid)
-        await cartSchema.findOneAndDelete({uuid: req.body.uuid}).exec();
+        await cartSchema.findOneAndDelete({uuid: req.query.uuid}).exec();
         return res.status(200).json({'status': 'success', message: " cart is deleted successfully"});
     } catch (error) {
         console.log(error.message);
         return res.status(400).json({"status": 'failure', 'message': error.message})
     }
 })
+
+// get cart
+
+router.get("/get-cartitems", async(req,res)=>{
+  try {
+   const cartitem = await cartSchema.find();
+   res.status(200).json({"status":"success", "message":"products in cart","result":cartitem})
+  } catch (error) {
+    console.log(error.message);
+    return res.status(400).json({"status": 'failure', 'message': error.message})
+  }
+})
+
 
 //router.post('/cart-add', authverify, async(req,res)=>{
 //     const useruuid = req.body.useruuid;
