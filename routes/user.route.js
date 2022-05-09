@@ -142,3 +142,10 @@ router.put('/forgot-passsword', async(req,res)=>{
     }        
 })
 
+
+        return res.status(500).json({status:"failure", message:error.message})    
+    }
+ })
+
+
+module.exports = router;
