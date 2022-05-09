@@ -10,11 +10,15 @@ const cartSchema = new mongoose.Schema({
             productuuid: String,
             productName: String, 
             quantity:  Number ,
-            price: Number
+            price: Number,
         }
-    ]
+    ],
+    total : {type : Number, required: false, default :0 }   
 }, 
-{ timestamps: true }
+
+{ 
+    timestamps: true
+ }
 );
 
 cartSchema.pre('save', function(next){
