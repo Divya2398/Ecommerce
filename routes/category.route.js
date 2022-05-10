@@ -28,3 +28,4 @@ router.delete('/delete-category',Admin, async(req,res)=>{
     }
 })
 
+module.exports = router;
