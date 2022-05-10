@@ -101,5 +101,5 @@ router.get("/get-cartitems", async(req,res)=>{
     return res.status(400).json({"status": 'failure', 'message': error.message})
   }
 })
-
+module.exports = router;
   
