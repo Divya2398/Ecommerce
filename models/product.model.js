@@ -3,9 +3,10 @@ const crypto = require('crypto')
 
 const productSchema = new mongoose.Schema({
     uuid: {type:String, required:false},
-    productName: {type:String, required:true, trim:true},
+    productName: {type:String, required:true, trim:true ,unquie:true},
     Description: {type:String, required:true},
     price: {type:String, required:true},
+    quantity:{type:Number, required:true},
    categoryuuid: {type: String, required:true}
 },
 
